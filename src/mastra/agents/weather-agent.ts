@@ -22,5 +22,33 @@ export const weatherAgent = new Agent({
 `,
   model: openai('gpt-4o-mini'),
   tools: { weatherTool },
-  memory: new Memory(),
+    memory: new Memory({
+    options: {
+      lastMessages: 30,
+      workingMemory: {
+        enabled: true,
+        template: `
+# User Profile
+ 
+## Personal Info
+ 
+- Name:
+- Location:
+ 
+## Preferences
+ 
+- Communication Style: [e.g., Formal/Casual, vous/tu]
+- Likes:
+- Dislikes:
+ 
+## Session State
+ 
+- Last Topic Discussed:
+- Last Mood:
+- Last Activity:
+- Last Goal:
+`,
+      },
+    },
+  }),
 });
