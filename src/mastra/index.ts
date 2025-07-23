@@ -9,8 +9,10 @@ export const mastra = new Mastra({
   workflows: { weatherWorkflow },
   agents: { weatherAgent },
   storage: new LibSQLStore({
-    // stores telemetry, evals, ... into memory storage, if it needs to persist, change to file:../mastra.db
-    url: ":memory:",
+    url:
+      process.env.ENVIRONMENT === "production" ?
+        "file:./mastra.db"
+      : "file:../../mastra.db",
   }),
   logger: new PinoLogger({
     name: 'Mastra',
